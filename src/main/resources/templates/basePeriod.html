@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>每期的数据</title>
+        <link rel="stylesheet" th:href="@{/css/paginate.css}" media="screen" type="text/css" />
+        <script type="text/javascript" th:src="@{/js/jquery-3.2.1.js}"></script>
+        <script type="text/javascript" th:src="@{/js/jquery.paginate.js}"></script>
+        <script type="text/javascript" th:src="@{/js/ichart.1.2.1.min.js}"></script>
+        <style>
+            body{
+                background: #a7c7dc  repeat-x top left;
+                font-family: verdana;
+                padding:0px;
+                margin:0px;
+                letter-spacing:2px;
+            }
+        </style>
+    </head>
+    <body>
+        <input th:hidden="hidden" id="basePeriodDTOCount" th:value="${basePeriodDTOCount}" />
+        <input th:hidden="hidden" id="oddProbability" th:value="${oddProbability}"/>
+        <input th:hidden="hidden" id="evenProbability" th:value="${evenProbability}"/>
+        <div>
+            <div style="float: left">
+                <input th:value="每期数据" />
+                <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>期数</td>
+                        <td>红球1</td>
+                        <td>红球2</td>
+                        <td>红球3</td>
+                        <td>红球4</td>
+                        <td>红球5</td>
+                        <td>红球6</td>
+                        <td>蓝球</td>
+                        <td>奇偶</td>
+                    </tr>
+                    <tbody id="t_body" th:height="600px">
+                    <tr th:each="basePeriodDTO,basePeriodStat:${basePeriodDTOList}">
+                        <td th:text="${basePeriodDTO.periodNumber}"></td>
+                        <td style="color: red" th:text="${basePeriodDTO.redOneBall}"></td>
+                        <td style="color: red" th:text="${basePeriodDTO.redTwoBall}"></td>
+                        <td style="color: red" th:text="${basePeriodDTO.redThreeBall}"></td>
+                        <td style="color: red" th:text="${basePeriodDTO.redFourBall}"></td>
+                        <td style="color: red" th:text="${basePeriodDTO.redFiveBall}"></td>
+                        <td style="color: red" th:text="${basePeriodDTO.redSixBall}"></td>
+                        <td style="color: blue" th:text="${basePeriodDTO.blueBall}"></td>
+                        <td th:text="${basePeriodDTO.oddEvenData}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div style="float: left;">
+                <input th:value="红球区间分配概率"/>
+                <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td>区间ID</td>
+                        <td>区间1-11概率</td>
+                        <td>区间12-22概率</td>
+                        <td>区间23-33概率</td>
+                    </tr>
+                    <tbody id="section_body">
+                    <tr th:each="sectionProbabilityDTO,sectionProbabilityStat:${sectionProbabilityDTOList}">
+                        <td th:text="${sectionProbabilityDTO.sectionId}"></td>
+                        <td th:text="${sectionProbabilityDTO.firstSectionProbability}"></td>
+                        <td th:text="${sectionProbabilityDTO.secondSectionProbability}"></td>
+                        <td th:text="${sectionProbabilityDTO.thirdSectionProbability}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div  style="float: left;">
+                <div id="canvasDiv">
+
+                </div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+        <div>
+            <div id="pageCount">
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <div>
+            <input style="color: red;" th:value="红球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>红球1</td>
+                    <td>红球2</td>
+                    <td>红球3</td>
+                    <td>红球4</td>
+                    <td>红球5</td>
+                    <td>红球6</td>
+                    <td>红球7</td>
+                    <td>红球8</td>
+                    <td>红球9</td>
+                    <td>红球10</td>
+                    <td>红球11</td>
+                    <td>红球12</td>
+                    <td>红球13</td>
+                    <td>红球14</td>
+                    <td>红球15</td>
+                    <td>红球16</td>
+                    <td>红球17</td>
+                    <td>红球18</td>
+                    <td>红球19</td>
+                    <td>红球20</td>
+                    <td>红球21</td>
+                    <td>红球22</td>
+                    <td>红球23</td>
+                    <td>红球24</td>
+                    <td>红球25</td>
+                    <td>红球26</td>
+                    <td>红球27</td>
+                    <td>红球28</td>
+                    <td>红球29</td>
+                    <td>红球30</td>
+                    <td>红球31</td>
+                    <td>红球32</td>
+                    <td>红球33</td>
+                </tr>
+                <tbody id="red_probability_body">
+                <tr th:each="redBallProbabilityDTO,redBallProbabilityStat:${redBallProbabilityList}">
+                    <td th:text="${redBallProbabilityDTO.redBallOne}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwo}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallThree}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallFour}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallFive}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallSix}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallSeven}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallEight}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallNine}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTen}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallEleven}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwelve}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallThirteen}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallFourteen}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallFifteen}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallSixteen}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallSeventeen}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallEighteen}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallNineteen}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwenty}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentyOne}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentyTwo}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentyThree}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentyFour}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentyFive}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentySix}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentySeven}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentyEight}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallTwentyNine}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallThirty}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallThirtyOne}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallThirtyTwo}"></td>
+                    <td th:text="${redBallProbabilityDTO.redBallThirtyThree}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div>
+            <input style="color: red;" th:value="最新5期红球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>红球1</td>
+                    <td>红球2</td>
+                    <td>红球3</td>
+                    <td>红球4</td>
+                    <td>红球5</td>
+                    <td>红球6</td>
+                    <td>红球7</td>
+                    <td>红球8</td>
+                    <td>红球9</td>
+                    <td>红球10</td>
+                    <td>红球11</td>
+                    <td>红球12</td>
+                    <td>红球13</td>
+                    <td>红球14</td>
+                    <td>红球15</td>
+                    <td>红球16</td>
+                    <td>红球17</td>
+                    <td>红球18</td>
+                    <td>红球19</td>
+                    <td>红球20</td>
+                    <td>红球21</td>
+                    <td>红球22</td>
+                    <td>红球23</td>
+                    <td>红球24</td>
+                    <td>红球25</td>
+                    <td>红球26</td>
+                    <td>红球27</td>
+                    <td>红球28</td>
+                    <td>红球29</td>
+                    <td>红球30</td>
+                    <td>红球31</td>
+                    <td>红球32</td>
+                    <td>红球33</td>
+                </tr>
+                <tbody id="five_red_probability_body">
+                <tr th:each="fiveRedBallProbabilityDTO,fiveRedBallProbabilityStat:${fiveRedBallProbabilityList}">
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallOne}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwo}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallThree}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallFour}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallFive}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallSix}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallSeven}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallEight}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallNine}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTen}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallEleven}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwelve}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallThirteen}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallFourteen}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallFifteen}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallSixteen}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallSeventeen}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallEighteen}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallNineteen}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwenty}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentyOne}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentyTwo}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentyThree}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentyFour}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentyFive}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentySix}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentySeven}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentyEight}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallTwentyNine}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallThirty}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallThirtyOne}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallThirtyTwo}"></td>
+                    <td th:text="${fiveRedBallProbabilityDTO.redBallThirtyThree}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div>
+            <input style="color: red;" th:value="最新30期红球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>红球1</td>
+                    <td>红球2</td>
+                    <td>红球3</td>
+                    <td>红球4</td>
+                    <td>红球5</td>
+                    <td>红球6</td>
+                    <td>红球7</td>
+                    <td>红球8</td>
+                    <td>红球9</td>
+                    <td>红球10</td>
+                    <td>红球11</td>
+                    <td>红球12</td>
+                    <td>红球13</td>
+                    <td>红球14</td>
+                    <td>红球15</td>
+                    <td>红球16</td>
+                    <td>红球17</td>
+                    <td>红球18</td>
+                    <td>红球19</td>
+                    <td>红球20</td>
+                    <td>红球21</td>
+                    <td>红球22</td>
+                    <td>红球23</td>
+                    <td>红球24</td>
+                    <td>红球25</td>
+                    <td>红球26</td>
+                    <td>红球27</td>
+                    <td>红球28</td>
+                    <td>红球29</td>
+                    <td>红球30</td>
+                    <td>红球31</td>
+                    <td>红球32</td>
+                    <td>红球33</td>
+                </tr>
+                <tbody id="thirty_red_probability_body">
+                <tr th:each="thirtyRedBallProbabilityDTO,thirtyRedBallProbabilityStat:${thirtyRedBallProbabilityList}">
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallOne}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwo}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallThree}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallFour}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallFive}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallSix}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallSeven}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallEight}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallNine}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTen}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallEleven}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwelve}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallThirteen}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallFourteen}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallFifteen}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallSixteen}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallSeventeen}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallEighteen}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallNineteen}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwenty}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentyOne}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentyTwo}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentyThree}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentyFour}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentyFive}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentySix}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentySeven}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentyEight}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallTwentyNine}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallThirty}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallThirtyOne}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallThirtyTwo}"></td>
+                    <td th:text="${thirtyRedBallProbabilityDTO.redBallThirtyThree}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br/>
+        <div>
+            <input style="color: red;" th:value="最新50期红球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>红球1</td>
+                    <td>红球2</td>
+                    <td>红球3</td>
+                    <td>红球4</td>
+                    <td>红球5</td>
+                    <td>红球6</td>
+                    <td>红球7</td>
+                    <td>红球8</td>
+                    <td>红球9</td>
+                    <td>红球10</td>
+                    <td>红球11</td>
+                    <td>红球12</td>
+                    <td>红球13</td>
+                    <td>红球14</td>
+                    <td>红球15</td>
+                    <td>红球16</td>
+                    <td>红球17</td>
+                    <td>红球18</td>
+                    <td>红球19</td>
+                    <td>红球20</td>
+                    <td>红球21</td>
+                    <td>红球22</td>
+                    <td>红球23</td>
+                    <td>红球24</td>
+                    <td>红球25</td>
+                    <td>红球26</td>
+                    <td>红球27</td>
+                    <td>红球28</td>
+                    <td>红球29</td>
+                    <td>红球30</td>
+                    <td>红球31</td>
+                    <td>红球32</td>
+                    <td>红球33</td>
+                </tr>
+                <tbody id="fifty_red_probability_body">
+                <tr th:each="fiftyRedBallProbabilityDTO,fiftyRedBallProbabilityStat:${fiftyRedBallProbabilityList}">
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallOne}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwo}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallThree}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallFour}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallFive}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallSix}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallSeven}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallEight}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallNine}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTen}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallEleven}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwelve}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallThirteen}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallFourteen}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallFifteen}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallSixteen}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallSeventeen}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallEighteen}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallNineteen}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwenty}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentyOne}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentyTwo}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentyThree}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentyFour}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentyFive}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentySix}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentySeven}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentyEight}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallTwentyNine}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallThirty}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallThirtyOne}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallThirtyTwo}"></td>
+                    <td th:text="${fiftyRedBallProbabilityDTO.redBallThirtyThree}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/>
+        <div>
+            <input style="color: red;" th:value="最新100期红球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>红球1</td>
+                    <td>红球2</td>
+                    <td>红球3</td>
+                    <td>红球4</td>
+                    <td>红球5</td>
+                    <td>红球6</td>
+                    <td>红球7</td>
+                    <td>红球8</td>
+                    <td>红球9</td>
+                    <td>红球10</td>
+                    <td>红球11</td>
+                    <td>红球12</td>
+                    <td>红球13</td>
+                    <td>红球14</td>
+                    <td>红球15</td>
+                    <td>红球16</td>
+                    <td>红球17</td>
+                    <td>红球18</td>
+                    <td>红球19</td>
+                    <td>红球20</td>
+                    <td>红球21</td>
+                    <td>红球22</td>
+                    <td>红球23</td>
+                    <td>红球24</td>
+                    <td>红球25</td>
+                    <td>红球26</td>
+                    <td>红球27</td>
+                    <td>红球28</td>
+                    <td>红球29</td>
+                    <td>红球30</td>
+                    <td>红球31</td>
+                    <td>红球32</td>
+                    <td>红球33</td>
+                </tr>
+                <tbody id="oneHundred_red_probability_body">
+                <tr th:each="oneHundredRedBallProbabilityDTO,oneHundredRedBallProbabilityStat:${oneHundredRedBallProbabilityList}">
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallOne}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwo}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallThree}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallFour}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallFive}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallSix}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallSeven}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallEight}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallNine}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTen}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallEleven}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwelve}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallThirteen}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallFourteen}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallFifteen}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallSixteen}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallSeventeen}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallEighteen}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallNineteen}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwenty}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentyOne}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentyTwo}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentyThree}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentyFour}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentyFive}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentySix}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentySeven}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentyEight}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallTwentyNine}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallThirty}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallThirtyOne}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallThirtyTwo}"></td>
+                    <td th:text="${oneHundredRedBallProbabilityDTO.redBallThirtyThree}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br/>
+        <div>
+            <input style="color: blue;" th:value="蓝球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>蓝球1</td>
+                    <td>蓝球2</td>
+                    <td>蓝球3</td>
+                    <td>蓝球4</td>
+                    <td>蓝球5</td>
+                    <td>蓝球6</td>
+                    <td>蓝球7</td>
+                    <td>蓝球8</td>
+                    <td>蓝球9</td>
+                    <td>蓝球10</td>
+                    <td>蓝球11</td>
+                    <td>蓝球12</td>
+                    <td>蓝球13</td>
+                    <td>蓝球14</td>
+                    <td>蓝球15</td>
+                    <td>蓝球16</td>
+                </tr>
+                <tbody id="blue_probability_body">
+                <tr th:each="blueBallProbabilityDTO,blueBallProbabilityStat:${blueBallProbabilityDTOList}">
+                    <td th:text="${blueBallProbabilityDTO.blueBallOne}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallTwo}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallThree}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallFour}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallFive}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallSix}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallSeven}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallEight}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallNine}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallTen}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallEleven}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallTwelve}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallThirteen}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallFourteen}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallFifteen}"></td>
+                    <td th:text="${blueBallProbabilityDTO.blueBallSixteen}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br/>
+        <div>
+            <input style="color: blue;" th:value="最新5期蓝球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>蓝球1</td>
+                    <td>蓝球2</td>
+                    <td>蓝球3</td>
+                    <td>蓝球4</td>
+                    <td>蓝球5</td>
+                    <td>蓝球6</td>
+                    <td>蓝球7</td>
+                    <td>蓝球8</td>
+                    <td>蓝球9</td>
+                    <td>蓝球10</td>
+                    <td>蓝球11</td>
+                    <td>蓝球12</td>
+                    <td>蓝球13</td>
+                    <td>蓝球14</td>
+                    <td>蓝球15</td>
+                    <td>蓝球16</td>
+                </tr>
+                <tbody id="five_blue_probability_body">
+                <tr th:each="fiveBlueBallProbabilityDTO,fiveBlueBallProbabilityStat:${fiveBlueBallProbabilityDTOList}">
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallOne}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallTwo}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallThree}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallFour}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallFive}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallSix}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallSeven}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallEight}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallNine}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallTen}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallEleven}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallTwelve}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallThirteen}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallFourteen}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallFifteen}"></td>
+                    <td th:text="${fiveBlueBallProbabilityDTO.blueBallSixteen}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br/>
+        <div>
+            <input style="color: blue;" th:value="最新30期蓝球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>蓝球1</td>
+                    <td>蓝球2</td>
+                    <td>蓝球3</td>
+                    <td>蓝球4</td>
+                    <td>蓝球5</td>
+                    <td>蓝球6</td>
+                    <td>蓝球7</td>
+                    <td>蓝球8</td>
+                    <td>蓝球9</td>
+                    <td>蓝球10</td>
+                    <td>蓝球11</td>
+                    <td>蓝球12</td>
+                    <td>蓝球13</td>
+                    <td>蓝球14</td>
+                    <td>蓝球15</td>
+                    <td>蓝球16</td>
+                </tr>
+                <tbody id="thirty_blue_probability_body">
+                <tr th:each="thirtyBlueBallProbabilityDTO,thirtyBlueBallProbabilityStat:${thirtyBlueBallProbabilityDTOList}">
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallOne}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallTwo}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallThree}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallFour}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallFive}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallSix}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallSeven}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallEight}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallNine}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallTen}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallEleven}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallTwelve}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallThirteen}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallFourteen}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallFifteen}"></td>
+                    <td th:text="${thirtyBlueBallProbabilityDTO.blueBallSixteen}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br/>
+        <div>
+            <input style="color: blue;" th:value="最新50期蓝球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>蓝球1</td>
+                    <td>蓝球2</td>
+                    <td>蓝球3</td>
+                    <td>蓝球4</td>
+                    <td>蓝球5</td>
+                    <td>蓝球6</td>
+                    <td>蓝球7</td>
+                    <td>蓝球8</td>
+                    <td>蓝球9</td>
+                    <td>蓝球10</td>
+                    <td>蓝球11</td>
+                    <td>蓝球12</td>
+                    <td>蓝球13</td>
+                    <td>蓝球14</td>
+                    <td>蓝球15</td>
+                    <td>蓝球16</td>
+                </tr>
+                <tbody id="fifty_blue_probability_body">
+                <tr th:each="fiftyBlueBallProbabilityDTO,fiftyBlueBallProbabilityStat:${fiftyBlueBallProbabilityDTOList}">
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallOne}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallTwo}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallThree}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallFour}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallFive}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallSix}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallSeven}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallEight}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallNine}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallTen}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallEleven}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallTwelve}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallThirteen}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallFourteen}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallFifteen}"></td>
+                    <td th:text="${fiftyBlueBallProbabilityDTO.blueBallSixteen}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br/>
+        <div>
+            <input style="color: blue;" th:value="最新100期蓝球概率"/>
+            <table th:width="500px" border="1" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>蓝球1</td>
+                    <td>蓝球2</td>
+                    <td>蓝球3</td>
+                    <td>蓝球4</td>
+                    <td>蓝球5</td>
+                    <td>蓝球6</td>
+                    <td>蓝球7</td>
+                    <td>蓝球8</td>
+                    <td>蓝球9</td>
+                    <td>蓝球10</td>
+                    <td>蓝球11</td>
+                    <td>蓝球12</td>
+                    <td>蓝球13</td>
+                    <td>蓝球14</td>
+                    <td>蓝球15</td>
+                    <td>蓝球16</td>
+                </tr>
+                <tbody id="oneHundred_blue_probability_body">
+                <tr th:each="oneHundredBlueBallProbabilityDTO,oneHundredBlueBallProbabilityStat:${oneHundredBlueBallProbabilityDTOList}">
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallOne}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallTwo}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallThree}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallFour}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallFive}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallSix}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallSeven}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallEight}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallNine}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallTen}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallEleven}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallTwelve}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallThirteen}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallFourteen}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallFifteen}"></td>
+                    <td th:text="${oneHundredBlueBallProbabilityDTO.blueBallSixteen}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+    <script th:inline="JavaScript">
+        /*<![CDATA[*/
+        $(function() {
+            $("#pageCount").paginate({
+                count 		: $("#basePeriodDTOCount").val(),
+                start 		: 1,
+                display     : 10,
+                border					: true,
+                border_color			: '#fff',
+                text_color  			: '#fff',
+                background_color    	: '#9F35FF',
+                border_hover_color		: '#ccc',
+                text_hover_color  		: '#000',
+                background_hover_color	: '#fff',
+                images					: false,
+                mouse					: 'press',
+                onChange                :queryForPages
+            });
+
+            $("#sectionProbabilityCount").paginate({
+                count 		: $("#sectionCount").val(),
+                start 		: 1,
+                display     : 10,
+                border					: true,
+                border_color			: '#fff',
+                text_color  			: '#fff',
+                background_color    	: '#9F35FF',
+                border_hover_color		: '#ccc',
+                text_hover_color  		: '#000',
+                background_hover_color	: '#fff',
+                images					: false,
+                mouse					: 'press',
+                onChange                :sectionQueryForPages
+            });
+
+            var data = [
+                {name : '奇数概率',value :$("#oddProbability").val(),color:'#9d4a4a'},
+                {name : '偶数概率',value : $("#evenProbability").val(),color:'#5d7f97'}
+            ];
+
+            new iChart.Pie2D({
+                render : 'canvasDiv',
+                data: data,
+                title : '红球的数字综合奇偶概率',
+                legend : {
+                    enable : true
+                },
+                showpercent:true,
+                decimalsnum:2,
+                width : 350,
+                height : 200,
+                radius:50
+            }).draw();
+        });
+
+        var pageSize = "10";//每页行数
+        var currentPage = "1";//当前页
+        var url = "/getAllBasePeriods";
+        var sectionUrl = "/getPageSectionProbability";
+        function queryForPages(pageNum){
+            $.ajax({
+                url:url,
+                type:"get",
+                dataType:"json",
+                data:"pageNum="+pageNum,
+                success:function callbackFun(data){
+                    //解析json
+                    var info = data.data;
+                    //清空数据
+                    clearDate();
+                    fillTable(info);
+                }
+            });
+        }
+
+        //清空数据
+        function clearDate(){
+            $("#t_body").html("");
+        }
+
+        function fillTable(info){
+
+            if(info.length > 0){
+                var tbody_content="";//不初始化字符串"",会默认"undefined"
+                if(info.length == 1){
+                    tbody_content +="<tr>"
+                    +"<td>"+info[0].periodNumber+"</td>"
+                    +"<td style='color: red'>"+info[0].redOneBall+"</td>"
+                    +"<td style='color: red'>"+info[0].redTwoBall+"</td>"
+                    +"<td style='color: red'>"+info[0].redThreeBall+"</td>"
+                    +"<td style='color: red'>"+info[0].redFourBall+"</td>"
+                    +"<td style='color: red'>"+info[0].redFiveBall+"</td>"
+                    +"<td style='color: red'>"+info[0].redSixBall+"</td>"
+                    +"<td style='color: blue'>"+info[0].blueBall+"</td>"
+                    +"<td>"+info[0].oddEvenData+"</td>"
+                    +"</tr>"
+                    $("#t_body").html(tbody_content);
+                }else{
+                    for(var i=0 ; i<info.length-1;i++){
+                        tbody_content +="<tr>"
+                        +"<td>"+info[i].periodNumber+"</td>"
+                        +"<td style='color: red'>"+info[i].redOneBall+"</td>"
+                        +"<td style='color: red'>"+info[i].redTwoBall+"</td>"
+                        +"<td style='color: red'>"+info[i].redThreeBall+"</td>"
+                        +"<td style='color: red'>"+info[i].redFourBall+"</td>"
+                        +"<td style='color: red'>"+info[i].redFiveBall+"</td>"
+                        +"<td style='color: red'>"+info[i].redSixBall+"</td>"
+                        +"<td style='color: blue'>"+info[i].blueBall+"</td>"
+                        +"<td>"+info[i].oddEvenData+"</td>"
+                        +"</tr>"
+                        $("#t_body").html(tbody_content);
+                    }
+                }
+            }else{
+                $("#t_body").html("");
+            }
+        }
+
+        function sectionQueryForPages(pageNum){
+            $.ajax({
+                url:sectionUrl,
+                type:"get",
+                dataType:"json",
+                data:"pageNum="+pageNum,
+                success:function callbackFun(data){
+                    //解析json
+                    var info = data.data;
+                    //清空数据
+                    clearSectionDate();
+                    fillSectionTable(info);
+                }
+            });
+        }
+
+        //清空数据
+        function clearSectionDate(){
+            $("#section_body").html("");
+        }
+
+        function fillSectionTable(info) {
+            if(info.length > 0){
+                var tbody_content="";//不初始化字符串"",会默认"undefined"
+                if(info.length == 1){
+                    tbody_content +="<tr>"
+                            +"<td>"+info[0].sectionId+"</td>"
+                            +"<td>"+info[0].firstSectionProbability+"</td>"
+                            +"<td>"+info[0].secondSectionProbability+"</td>"
+                            +"<td>"+info[0].thirdSectionProbability+"</td>"
+                            +"</tr>"
+                    $("#section_body").html(tbody_content);
+                }else{
+                    for(var i=0 ; i<info.length-1;i++){
+                        tbody_content +="<tr>"
+                                +"<td>"+info[i].sectionId+"</td>"
+                                +"<td>"+info[i].firstSectionProbability+"</td>"
+                                +"<td>"+info[i].secondSectionProbability+"</td>"
+                                +"<td>"+info[i].thirdSectionProbability+"</td>"
+                                +"</tr>"
+                        $("#section_body").html(tbody_content);
+                    }
+                }
+            }else{
+                $("#section_body").html("");
+            }
+        }
+
+        /*]]>*/
+    </script>
+</html>
+

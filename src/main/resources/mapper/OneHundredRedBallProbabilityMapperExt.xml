@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fucai.dao.OneHundredRedBallProbabilityMapperExt">
+      <select id="getRedBallProbability" parameterType="oneHundredRedBallProbabilityDTO" resultType="oneHundredRedBallProbabilityDTO">
+        SELECT
+            BALL_PROBABILITY_ID ballProbabilityId,
+            RED_BALL_ONE redBallOne,
+            RED_BALL_TWO redBallTwo,
+            RED_BALL_THREE redBallThree,
+            RED_BALL_FOUR redBallFour,
+            RED_BALL_FIVE redBallFive,
+            RED_BALL_SIX redBallSix,
+            RED_BALL_SEVEN redBallSeven,
+            RED_BALL_EIGHT redBallEight,
+            RED_BALL_NINE redBallNine,
+            RED_BALL_TEN redBallTen,
+            RED_BALL_ELEVEN redBallEleven,
+            RED_BALL_TWELVE redBallTwelve,
+            RED_BALL_THIRTEEN redBallThirteen,
+            RED_BALL_FOURTEEN redBallFourteen,
+            RED_BALL_FIFTEEN redBallFifteen,
+            RED_BALL_SIXTEEN redBallSixteen,
+            RED_BALL_SEVENTEEN redBallSeventeen,
+            RED_BALL_EIGHTEEN redBallEighteen,
+            RED_BALL_NINETEEN redBallNineteen,
+            RED_BALL_TWENTY redBallTwenty,
+            RED_BALL_TWENTY_ONE redBallTwentyOne,
+            RED_BALL_TWENTY_TWO redBallTwentyTwo,
+            RED_BALL_TWENTY_THREE redBallTwentyThree,
+            RED_BALL_TWENTY_FOUR redBallTwentyFour,
+            RED_BALL_TWENTY_FIVE redBallTwentyFive,
+            RED_BALL_TWENTY_SIX redBallTwentySix,
+            RED_BALL_TWENTY_SEVEN redBallTwentySeven,
+            RED_BALL_TWENTY_EIGHT redBallTwentyEight,
+            RED_BALL_TWENTY_NINE redBallTwentyNine,
+            RED_BALL_THIRTY redBallThirty,
+            RED_BALL_THIRTY_ONE redBallThirtyOne,
+            RED_BALL_THIRTY_TWO redBallThirtyTwo,
+            RED_BALL_THIRTY_THREE redBallThirtyThree,
+            LAST_UPDATE_DATE lastUpdateDate
+        FROM
+            ONE_HUNDRED_RED_BALL_PROBABILITY
+        <if test="fromBase == 1">
+            LIMIT #{minValue},#{maxValue}
+        </if>
+      </select>
+</mapper>

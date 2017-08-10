@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fucai.dao.DataLocationProbabilityMapperExt">
+      <select id="getDataLocationProbabilitys" resultType="dataLocationProbabilityDTO">
+            SELECT
+                DATA_LOCATION_PROBABILITY_ID dataLocationProbabilityId,
+                APPEAR_DATA appearData,
+                LOCATION_ONE_PROBABILITY locationOneProbability,
+                LOCATION_TWO_PROBABILITY locationTwoProbability,
+                LOCATION_THREE_PROBABILITY locationThreeProbability,
+                LOCATION_FOUR_PROBABILITY locationFourProbability,
+                LOCATION_FIVE_PROBABILITY locationFiveProbability,
+                LOCATION_SIX_PROBABILITY locationSixProbability,
+                LAST_UPDATE_DATA lastUpdateData
+            FROM
+                DATA_LOCATION_PROBABILITY
+      </select>
+
+    <select id="getDataLocationProbability" parameterType="dataLocationProbabilityDTO" resultType="dataLocationProbabilityDTO">
+        SELECT
+            DATA_LOCATION_PROBABILITY_ID dataLocationProbabilityId,
+            APPEAR_DATA appearData,
+            LOCATION_ONE_PROBABILITY locationOneProbability,
+            LOCATION_TWO_PROBABILITY locationTwoProbability,
+            LOCATION_THREE_PROBABILITY locationThreeProbability,
+            LOCATION_FOUR_PROBABILITY locationFourProbability,
+            LOCATION_FIVE_PROBABILITY locationFiveProbability,
+            LOCATION_SIX_PROBABILITY locationSixProbability,
+            LAST_UPDATE_DATA lastUpdateData
+        FROM
+            DATA_LOCATION_PROBABILITY
+        WHERE
+            1 =1
+        <if test="appearData != null and appearData != ''">
+            AND APPEAR_DATA = #{appearData}
+        </if>
+    </select>
+
+    <update id="updateDataLocationProbability" parameterType="dataLocationProbabilityDTO">
+        UPDATE
+            DATA_LOCATION_PROBABILITY
+        SET
+            LOCATION_ONE_PROBABILITY = #{locationOneProbability},
+            LOCATION_TWO_PROBABILITY = #{locationTwoProbability},
+            LOCATION_THREE_PROBABILITY = #{locationThreeProbability},
+            LOCATION_FOUR_PROBABILITY = #{locationFourProbability},
+            LOCATION_FIVE_PROBABILITY = #{locationFiveProbability},
+            LOCATION_SIX_PROBABILITY = #{locationSixProbability},
+            LAST_UPDATE_DATA = #{lastUpdateData}
+        WHERE
+        APPEAR_DATA = #{appearData}
+    </update>
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true
+scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。
+           当scan为true时，此属性生效。默认的时间间隔为1分钟
+debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
+-->
+<configuration scan="true" scanPeriod="60 second" debug="false">
+    <!--定义上下文名称-->
+    <property name="LoggerTest1" value="LoggerTest1" />
+    <!--日志路径-->
+    <property name="LOG_PATH" value="log" />
+    <contextName>${LoggerTest1}</contextName>
+    <!--控制台打印设置-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 默认配置为PatternLayoutEncoder -->
+        <!--
+            %d{yyyy-MM-dd HH:mm:ss.SSS}——日志输出时间
+            %-4relative 输出从程序启动到创建日志记录的时间，单位是毫秒，进行左对齐 且最小宽度为4
+            %thread——输出日志的进程名字
+            %-5level——日志级别，并且使用5个字符靠左对齐
+            %logger{36}——日志输出者的名字,名字长度从右到左为36个长度，大于36个长度的字符不显示，长度可以随便设置，
+            为0表示只输入logger最右边点符号之后的字符串
+            %msg——日志消息
+            %n——平台的换行符
+        -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <!--文件路径下的日志-->
+        <file>${LOG_PATH}/testFile.log</file>
+        <!--是否添加到末尾，如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true-->
+        <append>true</append>
+        <encoder>
+            <!--日志格式-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <!--如果是 true，日志会被安全的写入文件，即使其他的FileAppender也在向此文件做写入操作，效率低，默认是 false-->
+        <prudent>true</prudent>
+    </appender>
+    <!--滚动日志记录-->
+    <appender name="TIME_ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志先保存到该文件中，日志文件满足设置大小触发滚动条件-->
+        <file>${LOG_PATH}/timeFile.log</file>
+        <!--每天一个日志,这个是最常用的记录方式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/logFile.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!--保存1天的日志记录，超过该天数的日都会被删除-->
+            <maxHistory>1</maxHistory>
+            <!--记录日志大小，超过该大小生成新的日志文件，配置该属性时日志文件必须包含"-%i"-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FIXED_ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志先保存到该文件中，日志文件满足设置大小触发滚动条件-->
+        <file>${LOG_PATH}/test.log</file>
+        <!--固定大小日志，设置了3个文件大小，当文件大小超过3个的时候将覆盖最早的日志文件-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <!--可以设置为压缩格式-->
+            <!--<fileNamePattern>${LOG_PATH}/tests.%i.log.zip</fileNamePattern>-->
+            <fileNamePattern>${LOG_PATH}/tests.%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>3</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>1MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--
+        不区分大小写,可以设置单个类的日志级别，也可以设置路径下面所有类的日志级别，如果没有设置日志级别将会
+        继承root的日志级别
+    -->
+    <logger name="com.fucai" level="debug"/>
+
+    <!--root用来设置appender-ref涉及的名称的日志级别-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="TIME_ROLLING_FILE" />
+        <appender-ref ref="FIXED_ROLLING_FILE" />
+    </root>
+</configuration>

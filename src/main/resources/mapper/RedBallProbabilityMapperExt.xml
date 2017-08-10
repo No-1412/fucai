@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fucai.dao.RedBallProbabilityMapperExt">
+      <select id="getRedBallProbability" parameterType="redBallProbabilityDTO" resultType="redBallProbabilityDTO">
+            SELECT
+                BALL_PROBABILITY_ID ballProbabilityId,
+                RED_BALL_ONE redBallOne,
+                RED_BALL_TWO redBallTwo,
+                RED_BALL_THREE redBallThree,
+                RED_BALL_FOUR redBallFour,
+                RED_BALL_FIVE redBallFive,
+                RED_BALL_SIX redBallSix,
+                RED_BALL_SEVEN redBallSeven,
+                RED_BALL_EIGHT redBallEight,
+                RED_BALL_NINE redBallNine,
+                RED_BALL_TEN redBallTen,
+                RED_BALL_ELEVEN redBallEleven,
+                RED_BALL_TWELVE redBallTwelve,
+                RED_BALL_THIRTEEN redBallThirteen,
+                RED_BALL_FOURTEEN redBallFourteen,
+                RED_BALL_FIFTEEN redBallFifteen,
+                RED_BALL_SIXTEEN redBallSixteen,
+                RED_BALL_SEVENTEEN redBallSeventeen,
+                RED_BALL_EIGHTEEN redBallEighteen,
+                RED_BALL_NINETEEN redBallNineteen,
+                RED_BALL_TWENTY redBallTwenty,
+                RED_BALL_TWENTY_ONE redBallTwentyOne,
+                RED_BALL_TWENTY_TWO redBallTwentyTwo,
+                RED_BALL_TWENTY_THREE redBallTwentyThree,
+                RED_BALL_TWENTY_FOUR redBallTwentyFour,
+                RED_BALL_TWENTY_FIVE redBallTwentyFive,
+                RED_BALL_TWENTY_SIX redBallTwentySix,
+                RED_BALL_TWENTY_SEVEN redBallTwentySeven,
+                RED_BALL_TWENTY_EIGHT redBallTwentyEight,
+                RED_BALL_TWENTY_NINE redBallTwentyNine,
+                RED_BALL_THIRTY redBallThirty,
+                RED_BALL_THIRTY_ONE redBallThirtyOne,
+                RED_BALL_THIRTY_TWO redBallThirtyTwo,
+                RED_BALL_THIRTY_THREE redBallThirtyThree,
+                LAST_UPDATE_DATE lastUpdateDate
+            FROM
+                RED_BALL_PROBABILITY
+            <if test="fromBase == 1">
+                  LIMIT #{minValue},#{maxValue}
+            </if>
+      </select>
+
+    <select id="getCountRedBallProbability" parameterType="fiveRedBallProbabilityDTO" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            RED_BALL_PROBABILITY
+        WHERE
+            RED_BALL_ONE = #{redBallOne}
+        AND RED_BALL_TWO = #{redBallTwo}
+        AND RED_BALL_THREE = #{redBallThree}
+        AND RED_BALL_FOUR = #{redBallFour}
+        AND RED_BALL_FIVE = #{redBallFive}
+        AND RED_BALL_SIX = #{redBallSix}
+        AND RED_BALL_SEVEN = #{redBallSeven}
+        AND RED_BALL_EIGHT = #{redBallEight}
+        AND RED_BALL_NINE = #{redBallNine}
+        AND RED_BALL_TEN = #{redBallTen}
+        AND RED_BALL_ELEVEN = #{redBallEleven}
+        AND RED_BALL_TWELVE = #{redBallTwelve}
+        AND RED_BALL_THIRTEEN = #{redBallThirteen}
+        AND RED_BALL_FOURTEEN = #{redBallFourteen}
+        AND RED_BALL_FIFTEEN = #{redBallFifteen}
+        AND RED_BALL_SIXTEEN = #{redBallSixteen}
+        AND RED_BALL_SEVENTEEN = #{redBallSeventeen}
+        AND RED_BALL_EIGHTEEN = #{redBallEighteen}
+        AND RED_BALL_NINETEEN = #{redBallNineteen}
+        AND RED_BALL_TWENTY = #{redBallTwenty}
+        AND RED_BALL_TWENTY_ONE = #{redBallTwentyOne}
+        AND RED_BALL_TWENTY_TWO = #{redBallTwentyTwo}
+        AND RED_BALL_TWENTY_THREE = #{redBallTwentyThree}
+        AND RED_BALL_TWENTY_FOUR = #{redBallTwentyFour}
+        AND RED_BALL_TWENTY_FIVE = #{redBallTwentyFive}
+        AND RED_BALL_TWENTY_SIX = #{redBallTwentySix}
+        AND RED_BALL_TWENTY_SEVEN = #{redBallTwentySeven}
+        AND RED_BALL_TWENTY_EIGHT = #{redBallTwentyEight}
+        AND RED_BALL_TWENTY_NINE = #{redBallTwentyNine}
+        AND RED_BALL_THIRTY = #{redBallThirty}
+        AND RED_BALL_THIRTY_ONE = #{redBallThirtyOne}
+        AND RED_BALL_THIRTY_TWO = #{redBallThirtyTwo}
+        AND RED_BALL_THIRTY_THREE = #{redBallThirtyThree}
+    </select>
+
+    <select id="getMaxMinRedProbability" resultType="redBallProbabilityDTO">
+        SELECT
+            MAX(RED_BALL_ONE) maxRedBallOne,
+            MIN(RED_BALL_ONE) minRedBallOne,
+            MAX(RED_BALL_TWO) maxRedBallTwo,
+            MIN(RED_BALL_TWO) minRedBallTwo,
+            MAX(RED_BALL_THREE) maxRedBallThree,
+            MIN(RED_BALL_THREE) minRedBallThree,
+            MAX(RED_BALL_FOUR) maxRedBallFour,
+            MIN(RED_BALL_FOUR) minRedBallFour,
+            MAX(RED_BALL_FIVE) maxRedBallFive,
+            MIN(RED_BALL_FIVE) minRedBallFive,
+            MAX(RED_BALL_SIX) maxRedBallSix,
+            MIN(RED_BALL_SIX) minRedBallSix,
+            MAX(RED_BALL_SEVEN) maxRedBallSeven,
+            MIN(RED_BALL_SEVEN) minRedBallSeven,
+            MAX(RED_BALL_EIGHT) maxRedBallEight,
+            MIN(RED_BALL_EIGHT) minRedBallEight,
+            MAX(RED_BALL_NINE) maxRedBallNine,
+            MIN(RED_BALL_NINE) minRedBallNine,
+            MAX(RED_BALL_TEN) maxRedBallTen,
+            MIN(RED_BALL_TEN) minRedBallTen,
+            MAX(RED_BALL_ELEVEN) maxRedBallEleven,
+            MIN(RED_BALL_ELEVEN) minRedBallEleven,
+            MAX(RED_BALL_TWELVE) maxRedBallTwelve,
+            MIN(RED_BALL_TWELVE) minRedBallTwelve,
+            MAX(RED_BALL_THIRTEEN) maxRedBallThirteen,
+            MIN(RED_BALL_THIRTEEN) minRedBallThirteen,
+            MAX(RED_BALL_FOURTEEN) maxRedBallFourteen,
+            MIN(RED_BALL_FOURTEEN) minRedBallFourteen,
+            MAX(RED_BALL_FIFTEEN) maxRedBallFifteen,
+            MIN(RED_BALL_FIFTEEN) minRedBallFifteen,
+            MAX(RED_BALL_SIXTEEN) maxRedBallSixteen,
+            MIN(RED_BALL_SIXTEEN) minRedBallSixteen,
+            MAX(RED_BALL_SEVENTEEN) maxRedBallSeventeen,
+            MIN(RED_BALL_SEVENTEEN) minRedBallSeventeen,
+            MAX(RED_BALL_EIGHTEEN) maxRedBallEighteen,
+            MIN(RED_BALL_EIGHTEEN) minRedBallEighteen,
+            MAX(RED_BALL_NINETEEN) maxRedBallNineteen,
+            MIN(RED_BALL_NINETEEN) minRedBallNineteen,
+            MAX(RED_BALL_TWENTY) maxRedBallTwenty,
+            MIN(RED_BALL_TWENTY) minRedBallTwenty,
+            MAX(RED_BALL_TWENTY_ONE) maxRedBallTwentyOne,
+            MIN(RED_BALL_TWENTY_ONE) minRedBallTwentyOne,
+            MAX(RED_BALL_TWENTY_TWO) maxRedBallTwentyTwo,
+            MIN(RED_BALL_TWENTY_TWO) minRedBallTwentyTwo,
+            MAX(RED_BALL_TWENTY_THREE) maxRedBallTwentyThree,
+            MIN(RED_BALL_TWENTY_THREE) minRedBallTwentyThree,
+            MAX(RED_BALL_TWENTY_FOUR) maxRedBallTwentyFour,
+            MIN(RED_BALL_TWENTY_FOUR) minRedBallTwentyFour,
+            MAX(RED_BALL_TWENTY_FIVE) maxRedBallTwentyFive,
+            MIN(RED_BALL_TWENTY_FIVE) minRedBallTwentyFive,
+            MAX(RED_BALL_TWENTY_SIX) maxRedBallTwentySix,
+            MIN(RED_BALL_TWENTY_SIX) minRedBallTwentySix,
+            MAX(RED_BALL_TWENTY_SEVEN) maxRedBallTwentySeven,
+            MIN(RED_BALL_TWENTY_SEVEN) minRedBallTwentySeven,
+            MAX(RED_BALL_TWENTY_EIGHT) maxRedBallTwentyEight,
+            MIN(RED_BALL_TWENTY_EIGHT) minRedBallTwentyEight,
+            MAX(RED_BALL_TWENTY_NINE) maxRedBallTwentyNine,
+            MIN(RED_BALL_TWENTY_NINE) minRedBallTwentyNine,
+            MAX(RED_BALL_THIRTY) maxRedBallThirty,
+            MIN(RED_BALL_THIRTY) minRedBallThirty,
+            MAX(RED_BALL_THIRTY_ONE) maxRedBallThirtyOne,
+            MIN(RED_BALL_THIRTY_ONE) minRedBallThirtyOne,
+            MAX(RED_BALL_THIRTY_TWO) maxRedBallThirtyTwo,
+            MIN(RED_BALL_THIRTY_TWO) minRedBallThirtyTwo,
+            MAX(RED_BALL_THIRTY_THREE) maxRedBallThirtyThree,
+            MIN(RED_BALL_THIRTY_THREE) minRedBallThirtyThree
+        FROM
+            RED_BALL_PROBABILITY
+    </select>
+</mapper>

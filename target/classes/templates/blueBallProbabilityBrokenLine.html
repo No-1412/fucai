@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>蓝球概率曲线图</title>
+        <script type="text/javascript" th:src="@{/js/jquery-3.2.1.js}"></script>
+        <script type="text/javascript" th:src="@{/js/ichart.1.2.1.min.js}"></script>
+    </head>
+    <body>
+        <input th:hidden="hidden" id="blueBallOne" th:value="${blueBallOne}" />
+        <input th:hidden="hidden" id="blueBallTwo" th:value="${blueBallTwo}" />
+        <input th:hidden="hidden" id="blueBallThree" th:value="${blueBallThree}" />
+        <input th:hidden="hidden" id="blueBallFour" th:value="${blueBallFour}" />
+        <input th:hidden="hidden" id="blueBallFive" th:value="${blueBallFive}" />
+        <input th:hidden="hidden" id="blueBallSix" th:value="${blueBallSix}" />
+        <input th:hidden="hidden" id="blueBallSeven" th:value="${blueBallSeven}" />
+        <input th:hidden="hidden" id="blueBallEight" th:value="${blueBallEight}" />
+        <input th:hidden="hidden" id="blueBallNine" th:value="${blueBallNine}" />
+        <input th:hidden="hidden" id="blueBallTen" th:value="${blueBallTen}" />
+        <input th:hidden="hidden" id="blueBallEleven" th:value="${blueBallEleven}" />
+        <input th:hidden="hidden" id="blueBallTwelve" th:value="${blueBallTwelve}" />
+        <input th:hidden="hidden" id="blueBallThirteen" th:value="${blueBallThirteen}" />
+        <input th:hidden="hidden" id="blueBallFourteen" th:value="${blueBallFourteen}" />
+        <input th:hidden="hidden" id="blueBallFifteen" th:value="${blueBallFifteen}" />
+        <input th:hidden="hidden" id="blueBallSixteen" th:value="${blueBallSixteen}" />
+        <input th:hidden="hidden" id="minMaxBlueBallProbabilityDTO" th:value="${minMaxBlueBallProbabilityDTO}"/>
+
+        <div id="blueBallOneChat" style="float: left;">
+        </div>
+        <div id="blueBallTwoChat" style="float: left;">
+        </div>
+        <div id="blueBallThreeChat" style="float: left;">
+        </div>
+        <div id="blueBallFourChat" style="float: left;">
+        </div>
+        <div id="blueBallFiveChat" style="float: left;">
+        </div>
+        <div id="blueBallSixChat" style="float: left;">
+        </div>
+        <div style="clear:both"></div>
+        <div id="blueBallSevenChat" style="float: left;">
+        </div>
+        <div id="blueBallEightChat" style="float: left;">
+        </div>
+        <div id="blueBallNineChat" style="float: left;">
+        </div>
+        <div id="blueBallTenChat" style="float: left;">
+        </div>
+        <div id="blueBallElevenChat" style="float: left;">
+        </div>
+        <div id="blueBallTwelveChat" style="float: left;">
+        </div>
+        <div style="clear:both"></div>
+        <div id="blueBallThirteenChat" style="float: left;">
+        </div>
+        <div id="blueBallFourteenChat" style="float: left;">
+        </div>
+        <div id="blueBallFifteenChat" style="float: left;">
+        </div>
+        <div id="blueBallSixteenChat" style="float: left;">
+        </div>
+    </body>
+    <script type="text/javascript" th:src="@{/js/blueBallOneBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallTwoBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallThreeBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallFourBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallFiveBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallSixBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallSevenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallEightBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallNineBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallTenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallElevenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallTwelveBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallThirteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallFourteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallFifteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/blueBallSixteenBrokenLine.js}"></script>
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fucai.dao.BlueBallProbabilityMapperExt">
+      <select id="getBlueBallProbabilitys" parameterType="blueBallProbabilityDTO" resultType="blueBallProbabilityDTO">
+            SELECT
+                BALL_PROBABILITY_ID ballProbabilityId,
+                BLUE_BALL_ONE blueBallOne,
+                BLUE_BALL_TWO blueBallTwo,
+                BLUE_BALL_THREE blueBallThree,
+                BLUE_BALL_FOUR blueBallFour,
+                BLUE_BALL_FIVE blueBallFive,
+                BLUE_BALL_SIX blueBallSix,
+                BLUE_BALL_SEVEN blueBallSeven,
+                BLUE_BALL_EIGHT blueBallEight,
+                BLUE_BALL_NINE blueBallNine,
+                BLUE_BALL_TEN blueBallTen,
+                BLUE_BALL_ELEVEN blueBallEleven,
+                BLUE_BALL_TWELVE blueBallTwelve,
+                BLUE_BALL_THIRTEEN blueBallThirteen,
+                BLUE_BALL_FOURTEEN blueBallFourteen,
+                BLUE_BALL_FIFTEEN blueBallFifteen,
+                BLUE_BALL_SIXTEEN blueBallSixteen,
+                LAST_UPDATE_DATE lastUpdateDate
+            FROM
+                BLUE_BALL_PROBABILITY
+            <if test="fromBase == 1">
+                LIMIT #{minValue},#{maxValue}
+            </if>
+      </select>
+
+    <select id="getCountBlueBallProbability" parameterType="blueBallProbabilityDTO" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            BLUE_BALL_PROBABILITY
+        WHERE
+            BLUE_BALL_ONE = #{blueBallOne}
+        AND BLUE_BALL_TWO = #{blueBallTwo}
+        AND BLUE_BALL_THREE = #{blueBallThree}
+        AND BLUE_BALL_FOUR = #{blueBallFour}
+        AND BLUE_BALL_FIVE = #{blueBallFive}
+        AND BLUE_BALL_SIX = #{blueBallSix}
+        AND BLUE_BALL_SEVEN = #{blueBallSeven}
+        AND BLUE_BALL_EIGHT = #{blueBallEight}
+        AND BLUE_BALL_NINE = #{blueBallNine}
+        AND BLUE_BALL_TEN = #{blueBallTen}
+        AND BLUE_BALL_ELEVEN = #{blueBallEleven}
+        AND BLUE_BALL_TWELVE = #{blueBallTwelve}
+        AND BLUE_BALL_THIRTEEN = #{blueBallThirteen}
+        AND BLUE_BALL_FOURTEEN = #{blueBallFourteen}
+        AND BLUE_BALL_FIFTEEN = #{blueBallFifteen}
+        AND BLUE_BALL_SIXTEEN = #{blueBallSixteen}
+    </select>
+
+    <select id="getMinMaxBlueBallProbability" resultType="blueBallProbabilityDTO">
+        SELECT
+            MIN(BLUE_BALL_ONE) minBlueBallOne,
+            MAX(BLUE_BALL_ONE) maxBlueBallOne,
+            MIN(BLUE_BALL_TWO) minBlueBallTwo,
+            MAX(BLUE_BALL_TWO) maxBlueBallTwo,
+            MIN(BLUE_BALL_THREE) minBlueBallThree,
+            MAX(BLUE_BALL_THREE) maxBlueBallThree,
+            MIN(BLUE_BALL_FOUR) minBlueBallFour,
+            MAX(BLUE_BALL_FOUR) maxBlueBallFour,
+            MIN(BLUE_BALL_FIVE) minBlueBallFive,
+            MAX(BLUE_BALL_FIVE) maxBlueBallFive,
+            MIN(BLUE_BALL_SIX) minBlueBallSix,
+            MAX(BLUE_BALL_SIX) maxBlueBallSix,
+            MIN(BLUE_BALL_SEVEN) minBlueBallSeven,
+            MAX(BLUE_BALL_SEVEN) maxBlueBallSeven,
+            MIN(BLUE_BALL_EIGHT) minBlueBallEight,
+            MAX(BLUE_BALL_EIGHT) maxBlueBallEight,
+            MIN(BLUE_BALL_NINE) minBlueBallNine,
+            MAX(BLUE_BALL_NINE) maxBlueBallNine,
+            MIN(BLUE_BALL_TEN) minBlueBallTen,
+            MAX(BLUE_BALL_TEN) maxBlueBallTen,
+            MIN(BLUE_BALL_ELEVEN) minBlueBallEleven,
+            MAX(BLUE_BALL_ELEVEN) maxBlueBallEleven,
+            MIN(BLUE_BALL_TWELVE) minBlueBallTwelve,
+            MAX(BLUE_BALL_TWELVE) maxBlueBallTwelve,
+            MIN(BLUE_BALL_THIRTEEN) minBlueBallThirteen,
+            MAX(BLUE_BALL_THIRTEEN) maxBlueBallThirteen,
+            MIN(BLUE_BALL_FOURTEEN) minBlueBallFourteen,
+            MAX(BLUE_BALL_FOURTEEN) maxBlueBallFourteen,
+            MIN(BLUE_BALL_FIFTEEN) minBlueBallFifteen,
+            MAX(BLUE_BALL_FIFTEEN) maxBlueBallFifteen,
+            MIN(BLUE_BALL_SIXTEEN) minBlueBallSixteen,
+            MAX(BLUE_BALL_SIXTEEN) maxBlueBallSixteen
+        FROM
+            BLUE_BALL_PROBABILITY
+    </select>
+</mapper>

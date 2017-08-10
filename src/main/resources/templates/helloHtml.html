@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Hello World!</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" media="screen" type="text/css" />
+    <script th:src="@{js/jquery-3.2.1.js}"></script>
+</head>
+<body>
+<input th:hidden="fiveRedBallProbabilityList" th:value="${fiveRedBallProbabilityList}" />
+<input th:hidden="hidden" id="fiveRedBallProbabilityStr" th:value="${fiveRedBallProbabilityStr}" />
+<input th:hidden="hidden" id="sectionProbabilityStr" th:value="${sectionProbabilityStr}" />
+<h1 th:inline="text">Hello.v.2</h1>
+<p th:text="${hello}"></p>
+<div style="text-align:center;clear:both">
+</div>
+<script th:src="@{/js/d3.v3.min.js}"></script>
+
+<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

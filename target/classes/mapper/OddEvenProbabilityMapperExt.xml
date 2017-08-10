@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fucai.dao.OddEvenProbabilityMapperExt">
+
+      <select id="getOddEvenProbability" resultType="oddEvenProbabilityDTO">
+            SELECT
+                ODD_EVEN_ID oddEvenId,
+                ODD_PROBABILITY oddProbability,
+                EVEN_PROBABILITY evenProbability,
+                LAST_UPDATE_DATE lastUpdateDate
+            FROM
+                ODD_EVEN_PROBABILITY
+            ORDER BY ODD_EVEN_ID DESC
+            LIMIT 0,1
+      </select>
+</mapper>

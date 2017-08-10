@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>红球概率曲线图</title>
+
+        <script type="text/javascript" th:src="@{/js/jquery-3.2.1.js}"></script>
+        <script type="text/javascript" th:src="@{/js/ichart.1.2.1.min.js}"></script>
+    </head>
+    <body>
+        <input th:hidden="hidden" id="redBallOne" th:value="${redBallOne}" />
+        <input th:hidden="hidden" id="redBallTwo" th:value="${redBallTwo}" />
+        <input th:hidden="hidden" id="redBallThree" th:value="${redBallThree}" />
+        <input th:hidden="hidden" id="redBallFour" th:value="${redBallFour}" />
+        <input th:hidden="hidden" id="redBallFive" th:value="${redBallFive}" />
+        <input th:hidden="hidden" id="redBallSix" th:value="${redBallSix}" />
+        <input th:hidden="hidden" id="redBallSeven" th:value="${redBallSeven}" />
+        <input th:hidden="hidden" id="redBallEight" th:value="${redBallEight}" />
+        <input th:hidden="hidden" id="redBallNine" th:value="${redBallNine}" />
+        <input th:hidden="hidden" id="redBallTen" th:value="${redBallTen}" />
+        <input th:hidden="hidden" id="redBallEleven" th:value="${redBallEleven}" />
+        <input th:hidden="hidden" id="redBallTwelve" th:value="${redBallTwelve}" />
+        <input th:hidden="hidden" id="redBallThirteen" th:value="${redBallThirteen}" />
+        <input th:hidden="hidden" id="redBallFourteen" th:value="${redBallFourteen}" />
+        <input th:hidden="hidden" id="redBallFifteen" th:value="${redBallFifteen}" />
+        <input th:hidden="hidden" id="redBallSixteen" th:value="${redBallSixteen}" />
+        <input th:hidden="hidden" id="redBallSeventeen" th:value="${redBallSeventeen}" />
+        <input th:hidden="hidden" id="redBallEighteen" th:value="${redBallEighteen}" />
+        <input th:hidden="hidden" id="redBallNineteen" th:value="${redBallNineteen}" />
+        <input th:hidden="hidden" id="redBallTwenty" th:value="${redBallTwenty}" />
+        <input th:hidden="hidden" id="redBallTwentyOne" th:value="${redBallTwentyOne}" />
+        <input th:hidden="hidden" id="redBallTwentyTwo" th:value="${redBallTwentyTwo}" />
+        <input th:hidden="hidden" id="redBallTwentyThree" th:value="${redBallTwentyThree}" />
+        <input th:hidden="hidden" id="redBallTwentyFour" th:value="${redBallTwentyFour}" />
+        <input th:hidden="hidden" id="redBallTwentyFive" th:value="${redBallTwentyFive}" />
+        <input th:hidden="hidden" id="redBallTwentySix" th:value="${redBallTwentySix}" />
+        <input th:hidden="hidden" id="redBallTwentySeven" th:value="${redBallTwentySeven}" />
+        <input th:hidden="hidden" id="redBallTwentyEight" th:value="${redBallTwentyEight}" />
+        <input th:hidden="hidden" id="redBallTwentyNine" th:value="${redBallTwentyNine}" />
+        <input th:hidden="hidden" id="redBallThirty" th:value="${redBallThirty}" />
+        <input th:hidden="hidden" id="redBallThirtyOne" th:value="${redBallThirtyOne}" />
+        <input th:hidden="hidden" id="redBallThirtyTwo" th:value="${redBallThirtyTwo}" />
+        <input th:hidden="hidden" id="redBallThirtyThree" th:value="${redBallThirtyThree}" />
+        <input th:hidden="hidden" id="maxMinRedBallProbabilityDTO" th:value="${maxMinRedBallProbabilityDTO}" />
+        <div id="redBallOneChat" style="float: left;">
+        </div>
+        <div id="redBallTwoChat" style="float: left;">
+        </div>
+        <div id="redBallThreeChat" style="float: left;">
+        </div>
+        <div id="redBallFourChat" style="float: left;">
+        </div>
+        <div id="redBallFiveChat" style="float: left;">
+        </div>
+        <div id="redBallSixChat" style="float: left;">
+        </div>
+        <div style="clear:both"></div>
+        <div id="redBallSevenChat" style="float: left;">
+        </div>
+        <div id="redBallEightChat" style="float: left;">
+        </div>
+        <div id="redBallNineChat" style="float: left;">
+        </div>
+        <div id="redBallTenChat" style="float: left;">
+        </div>
+        <div id="redBallElevenChat" style="float: left;">
+        </div>
+        <div id="redBallTwelveChat" style="float: left;">
+        </div>
+        <div style="clear:both"></div>
+        <div id="redBallThirteenChat" style="float: left;">
+        </div>
+        <div id="redBallFourteenChat" style="float: left;">
+        </div>
+        <div id="redBallFifteenChat" style="float: left;">
+        </div>
+        <div id="redBallSixteenChat" style="float: left;">
+        </div>
+        <div id="redBallSeventeenChat" style="float: left;">
+        </div>
+        <div id="redBallEighteenChat" style="float: left;">
+        </div>
+        <div style="clear:both"></div>
+        <div id="redBallNineteenChat" style="float: left;">
+        </div>
+        <div id="redBallTwentyChat" style="float: left;">
+        </div>
+        <div id="redBallTwentyOneChat" style="float: left;">
+        </div>
+        <div id="redBallTwentyTwoChat" style="float: left;">
+        </div>
+        <div id="redBallTwentyThreeChat" style="float: left;">
+        </div>
+        <div id="redBallTwentyFourChat" style="float: left;">
+        </div>
+        <div style="clear:both"></div>
+        <div id="redBallTwentyFiveChat" style="float: left;">
+        </div>
+        <div id="redBallTwentySixChat" style="float: left;">
+        </div>
+        <div id="redBallTwentySevenChat" style="float: left;">
+        </div>
+        <div id="redBallTwentyEightChat" style="float: left;">
+        </div>
+        <div id="redBallTwentyNineChat" style="float: left;">
+        </div>
+        <div id="redBallThirtyChat" style="float: left;">
+        </div>
+        <div style="clear:both"></div>
+        <div id="redBallThirtyOneChat" style="float: left;">
+        </div>
+        <div id="redBallThirtyTwoChat" style="float: left;">
+        </div>
+        <div id="redBallThirtyThreeChat" style="float: left;">
+        </div>
+    </body>
+    <script type="text/javascript" th:src="@{/js/redBallOneBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwoBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallThreeBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallFourBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallFiveBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallSixBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallSevenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallEightBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallNineBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallElevenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwelveBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallThirteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallFourteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallFifteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallSixteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallSeventeenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallEighteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallNineteenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentyBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentyOneBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentyTwoBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentyThreeBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentyFourBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentyFiveBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentySixBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentySevenBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentyEightBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallTwentyNineBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallThirtyBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallThirtyOneBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallThirtyTwoBrokenLine.js}"></script>
+    <script type="text/javascript" th:src="@{/js/redBallThirtyThreeBrokenLine.js}"></script>
+    <script th:inline="JavaScript">
+        /*<![CDATA[*/
+        $(function() {
+
+
+            var labels = ["0", "0.05", "0.1", "0.15", "0.2", "0.25", "0.3", "0.35", "0.4", "0.45", "0.5", "0.55", "0.6", "0.65", "0.7", "0.75", "0.8", "0.85", "0.9", "0.95", "1"];
+
+            var redLabels = [
+
+                "0.196", "0.1961", "0.1962", "0.1963", "0.1964", "0.1965", "0.1966", "0.1967", "0.1968", "0.1969",
+                "0.197", "0.1971", "0.1972", "0.1973", "0.1974", "0.1975", "0.1976", "0.1977", "0.1978", "0.1979",
+                "0.198", "0.1981", "0.1982", "0.1983", "0.1984", "0.1985", "0.1986", "0.1987", "0.1988", "0.1989",
+                "0.199"
+            ];
+        });
+        /*]]>*/
+
+    </script>
+</html>

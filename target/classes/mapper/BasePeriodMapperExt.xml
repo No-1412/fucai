@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fucai.dao.BasePeriodMapperExt">
+    <insert id="batchAddBasePeriod" parameterType="java.util.List">
+      INSERT INTO BASE_PERIOD
+      (PERIOD_NUMBER, RED_ONE_BALL, RED_TWO_BALL,
+      RED_THREE_BALL, RED_FOUR_BALL, RED_FIVE_BALL,
+      RED_SIX_BALL, BLUE_BALL, CREATION_DATE)
+      VALUES
+      <foreach item="basePeriod" index="index" collection="list" separator=",">
+        (#{basePeriod.periodNumber},#{basePeriod.redOneBall},#{basePeriod.redTwoBall},
+        #{basePeriod.redThreeBall},#{basePeriod.redFourBall},#{basePeriod.redFiveBall},
+        #{basePeriod.redSixBall},#{basePeriod.blueBall},now()
+        )
+      </foreach>
+    </insert>
+
+    <select id="getAllBasePeriods" parameterType="basePeriodDTO" resultType="basePeriodDTO">
+          SELECT
+              PERIOD_ID periodId,
+              PERIOD_NUMBER periodNumber,
+              RED_ONE_BALL redOneBall,
+              RED_TWO_BALL redTwoBall,
+              RED_THREE_BALL redThreeBall,
+              RED_FOUR_BALL redFourBall,
+              RED_FIVE_BALL redFiveBall,
+              RED_SIX_BALL redSixBall,
+              BLUE_BALL blueBall,
+              ODD_EVEN_DATA oddEvenData,
+              CREATION_DATE creationDate
+          FROM
+              BASE_PERIOD
+          ORDER BY PERIOD_NUMBER DESC
+    </select>
+
+    <select id="getBasePeriod" parameterType="basePeriodDTO" resultType="basePeriodDTO">
+        SELECT
+            PERIOD_ID periodId,
+            PERIOD_NUMBER periodNumber,
+            RED_ONE_BALL redOneBall,
+            RED_TWO_BALL redTwoBall,
+            RED_THREE_BALL redThreeBall,
+            RED_FOUR_BALL redFourBall,
+            RED_FIVE_BALL redFiveBall,
+            RED_SIX_BALL redSixBall,
+            BLUE_BALL blueBall,
+            CREATION_DATE creationDate
+        FROM
+            BASE_PERIOD
+        WHERE
+            1=1
+        <if test="periodNumber != null and periodNumber != ''">
+            AND PERIOD_NUMBER = #{periodNumber}
+        </if>
+    </select>
+
+    <select id="getCountPeriod" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            BASE_PERIOD
+    </select>
+
+    <select id="getNeedRedBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            BASE_PERIOD
+        WHERE
+            RED_ONE_BALL = #{redBall}
+        OR RED_TWO_BALL = #{redBall}
+        OR RED_THREE_BALL = #{redBall}
+        OR RED_FOUR_BALL = #{redBall}
+        OR RED_FIVE_BALL = #{redBall}
+        OR RED_SIX_BALL = #{redBall}
+    </select>
+
+    <delete id="truncateBasePeriod">
+        TRUNCATE BASE_PERIOD
+    </delete>
+
+    <select id="getLatestFiveBasePeriods" resultType="basePeriodDTO">
+        SELECT
+            PERIOD_ID periodId,
+            PERIOD_NUMBER periodNumber,
+            RED_ONE_BALL redOneBall,
+            RED_TWO_BALL redTwoBall,
+            RED_THREE_BALL redThreeBall,
+            RED_FOUR_BALL redFourBall,
+            RED_FIVE_BALL redFiveBall,
+            RED_SIX_BALL redSixBall,
+            BLUE_BALL blueBall,
+            CREATION_DATE creationDate
+        FROM
+            BASE_PERIOD
+        ORDER BY PERIOD_NUMBER DESC
+        LIMIT 0 ,5
+    </select>
+
+    <select id="getLatestFiveNeedRedBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            (SELECT
+                RED_ONE_BALL ,
+                RED_TWO_BALL ,
+                RED_THREE_BALL ,
+                RED_FOUR_BALL ,
+                RED_FIVE_BALL ,
+                RED_SIX_BALL
+            FROM
+                BASE_PERIOD
+            ORDER BY PERIOD_NUMBER DESC
+            LIMIT 0 ,5
+          )BP
+        WHERE
+            RED_ONE_BALL = #{redBall}
+        OR RED_TWO_BALL = #{redBall}
+        OR RED_THREE_BALL = #{redBall}
+        OR RED_FOUR_BALL = #{redBall}
+        OR RED_FIVE_BALL = #{redBall}
+        OR RED_SIX_BALL = #{redBall}
+    </select>
+
+    <select id="getLatestThirtyBasePeriods" resultType="basePeriodDTO">
+        SELECT
+            PERIOD_ID periodId,
+            PERIOD_NUMBER periodNumber,
+            RED_ONE_BALL redOneBall,
+            RED_TWO_BALL redTwoBall,
+            RED_THREE_BALL redThreeBall,
+            RED_FOUR_BALL redFourBall,
+            RED_FIVE_BALL redFiveBall,
+            RED_SIX_BALL redSixBall,
+            BLUE_BALL blueBall,
+            CREATION_DATE creationDate
+        FROM
+            BASE_PERIOD
+        ORDER BY PERIOD_NUMBER DESC
+        LIMIT 0 ,30
+    </select>
+
+    <select id="getLatestThirtyNeedRedBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            (SELECT
+                RED_ONE_BALL ,
+                RED_TWO_BALL ,
+                RED_THREE_BALL ,
+                RED_FOUR_BALL ,
+                RED_FIVE_BALL ,
+                RED_SIX_BALL
+            FROM
+                BASE_PERIOD
+            ORDER BY PERIOD_NUMBER DESC
+            LIMIT 0 ,30
+          )BP
+        WHERE
+            RED_ONE_BALL = #{redBall}
+        OR RED_TWO_BALL = #{redBall}
+        OR RED_THREE_BALL = #{redBall}
+        OR RED_FOUR_BALL = #{redBall}
+        OR RED_FIVE_BALL = #{redBall}
+        OR RED_SIX_BALL = #{redBall}
+    </select>
+
+    <select id="getLatestFiftyBasePeriods" resultType="basePeriodDTO">
+        SELECT
+            PERIOD_ID periodId,
+            PERIOD_NUMBER periodNumber,
+            RED_ONE_BALL redOneBall,
+            RED_TWO_BALL redTwoBall,
+            RED_THREE_BALL redThreeBall,
+            RED_FOUR_BALL redFourBall,
+            RED_FIVE_BALL redFiveBall,
+            RED_SIX_BALL redSixBall,
+            BLUE_BALL blueBall,
+            CREATION_DATE creationDate
+        FROM
+            BASE_PERIOD
+        ORDER BY PERIOD_NUMBER DESC
+        LIMIT 0 ,50
+    </select>
+
+    <select id="getLatestFiftyNeedRedBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            (SELECT
+                RED_ONE_BALL ,
+                RED_TWO_BALL ,
+                RED_THREE_BALL ,
+                RED_FOUR_BALL ,
+                RED_FIVE_BALL ,
+                RED_SIX_BALL
+            FROM
+                BASE_PERIOD
+            ORDER BY PERIOD_NUMBER DESC
+            LIMIT 0 ,50
+          )BP
+        WHERE
+            RED_ONE_BALL = #{redBall}
+        OR RED_TWO_BALL = #{redBall}
+        OR RED_THREE_BALL = #{redBall}
+        OR RED_FOUR_BALL = #{redBall}
+        OR RED_FIVE_BALL = #{redBall}
+        OR RED_SIX_BALL = #{redBall}
+    </select>
+
+    <select id="getLatestOneHundredBasePeriods" resultType="basePeriodDTO">
+        SELECT
+            PERIOD_ID periodId,
+            PERIOD_NUMBER periodNumber,
+            RED_ONE_BALL redOneBall,
+            RED_TWO_BALL redTwoBall,
+            RED_THREE_BALL redThreeBall,
+            RED_FOUR_BALL redFourBall,
+            RED_FIVE_BALL redFiveBall,
+            RED_SIX_BALL redSixBall,
+            BLUE_BALL blueBall,
+            CREATION_DATE creationDate
+        FROM
+            BASE_PERIOD
+        ORDER BY PERIOD_NUMBER DESC
+        LIMIT 0 ,100
+    </select>
+
+    <select id="getLatestOneHundredNeedRedBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            (SELECT
+                RED_ONE_BALL ,
+                RED_TWO_BALL ,
+                RED_THREE_BALL ,
+                RED_FOUR_BALL ,
+                RED_FIVE_BALL ,
+                RED_SIX_BALL
+            FROM
+                BASE_PERIOD
+            ORDER BY PERIOD_NUMBER DESC
+            LIMIT 0 ,100
+          )BP
+        WHERE
+            RED_ONE_BALL = #{redBall}
+        OR RED_TWO_BALL = #{redBall}
+        OR RED_THREE_BALL = #{redBall}
+        OR RED_FOUR_BALL = #{redBall}
+        OR RED_FIVE_BALL = #{redBall}
+        OR RED_SIX_BALL = #{redBall}
+    </select>
+
+    <select id="getOddEvenData" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1) oddEvenData
+        FROM
+            BASE_PERIOD
+        WHERE
+            (RED_ONE_BALL + RED_TWO_BALL + RED_THREE_BALL +RED_FOUR_BALL +RED_FIVE_BALL +RED_SIX_BALL)%2 = 1
+    </select>
+
+    <update id="updateOddEvenData">
+        UPDATE
+            BASE_PERIOD
+        SET
+            ODD_EVEN_DATA = (RED_ONE_BALL + RED_TWO_BALL + RED_THREE_BALL +RED_FOUR_BALL +RED_FIVE_BALL +RED_SIX_BALL) % 2
+        WHERE
+            ODD_EVEN_DATA IS NULL
+    </update>
+    
+    <select id="getBetweenOneAndElevenRedInt" resultType="java.lang.Integer">
+        SELECT 
+            COUNT(1)
+        FROM 
+            BASE_PERIOD
+        WHERE
+            RED_ONE_BALL &lt; 12
+        OR RED_TWO_BALL &lt; 12
+        OR RED_THREE_BALL &lt; 12
+        OR RED_FOUR_BALL &lt; 12
+        OR RED_FIVE_BALL &lt; 12
+        OR RED_SIX_BALL &lt; 12
+    </select>
+    
+    <select id="getBetweenTwelveAndTwentyTwoRedInt" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            BASE_PERIOD
+        WHERE
+            (RED_ONE_BALL > 11 AND RED_ONE_BALL &lt; 23)
+        OR (RED_TWO_BALL > 11 AND RED_TWO_BALL &lt; 23)
+        OR (RED_THREE_BALL > 11 AND RED_THREE_BALL &lt; 23)
+        OR (RED_FOUR_BALL > 11 AND RED_FOUR_BALL &lt; 23)
+        OR (RED_FIVE_BALL > 11 AND RED_FIVE_BALL &lt; 23)
+        OR (RED_SIX_BALL > 11 AND RED_SIX_BALL &lt; 23);
+    </select>
+
+    <select id="getBetweenTwentyThreeAndThirtyThree" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            BASE_PERIOD
+        WHERE
+            RED_ONE_BALL > 22
+        OR RED_TWO_BALL > 22
+        OR RED_THREE_BALL > 22
+        OR RED_FOUR_BALL > 22
+        OR RED_FIVE_BALL > 22
+        OR RED_SIX_BALL > 22
+    </select>
+
+    <select id="getLocationAppearTime" parameterType="basePeriodDTO" resultType="basePeriodDTO">
+        SELECT
+        <if test="location == 1">
+            COUNT(RED_ONE_BALL) redBallCount,RED_ONE_BALL redOneBall
+        </if>
+        <if test="location == 2">
+            COUNT(RED_TWO_BALL) redBallCount,RED_TWO_BALL redTwoBall
+        </if>
+        <if test="location == 3">
+            COUNT(RED_THREE_BALL) redBallCount,RED_THREE_BALL redThreeBall
+        </if>
+        <if test="location == 4">
+            COUNT(RED_FOUR_BALL) redBallCount,RED_FOUR_BALL redFourBall
+        </if>
+        <if test="location == 5">
+            COUNT(RED_FIVE_BALL) redBallCount,RED_FIVE_BALL redFiveBall
+        </if>
+        <if test="location == 6">
+            COUNT(RED_SIX_BALL) redBallCount,RED_SIX_BALL redSixBall
+        </if>
+        FROM
+            BASE_PERIOD
+        <if test="location == 1">
+            GROUP BY RED_ONE_BALL
+        </if>
+        <if test="location == 2">
+            GROUP BY RED_TWO_BALL
+        </if>
+        <if test="location == 3">
+            GROUP BY RED_THREE_BALL
+        </if>
+        <if test="location == 4">
+            GROUP BY RED_FOUR_BALL
+        </if>
+        <if test="location == 5">
+            GROUP BY RED_FIVE_BALL
+        </if>
+        <if test="location == 6">
+            GROUP BY RED_SIX_BALL
+        </if>
+    </select>
+
+    <select id="getNeedBlueBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            BASE_PERIOD
+        WHERE
+            BLUE_BALL = #{blueBall}
+    </select>
+
+    <select id="getLatestFiveNeedBlueBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+        (
+            SELECT
+              BLUE_BALL
+            FROM
+              BASE_PERIOD
+            ORDER BY PERIOD_NUMBER DESC
+            LIMIT 0 ,5
+        )BP
+        WHERE
+        BLUE_BALL = #{blueBall}
+    </select>
+
+    <select id="getLatestThirtyNeedBlueBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+        (
+            SELECT
+                BLUE_BALL
+            FROM
+                BASE_PERIOD
+            ORDER BY PERIOD_NUMBER DESC
+            LIMIT 0 ,30
+        )BP
+        WHERE
+        BLUE_BALL = #{blueBall}
+    </select>
+
+    <select id="getLatestFiftyNeedBlueBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+        (
+            SELECT
+                BLUE_BALL
+            FROM
+                BASE_PERIOD
+            ORDER BY PERIOD_NUMBER DESC
+            LIMIT 0 ,50
+        )BP
+        WHERE
+            BLUE_BALL = #{blueBall}
+    </select>
+
+    <select id="getLatestOneHundredNeedBlueBallCountPeriod" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+        (
+            SELECT
+                BLUE_BALL
+            FROM
+                BASE_PERIOD
+            ORDER BY PERIOD_NUMBER DESC
+            LIMIT 0 ,100
+        )BP
+        WHERE
+            BLUE_BALL = #{blueBall}
+    </select>
+ </mapper>
